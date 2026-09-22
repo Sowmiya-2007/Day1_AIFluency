@@ -1,0 +1,104 @@
+# AI Fluency Course - Day 1 Lab
+
+## Overview & Aim
+This project sets up a Python development environment in VS Code, integrates with Large Language Models (LLM via Groq API), and compares three distinct AI architecture approaches on identical tasks:
+1. **Chatbot** - Conversational assistant using standard LLM capabilities.
+2. **Rule-Based Workflow** - Deterministic system operating without LLMs based on static rule sets.
+3. **AI Agent** - Dynamic reasoning system combining LLM capability with custom tool invocation.
+
+---
+
+## Project Structure
+- `config.py` - Configuration settings, API provider setup, and environment management.
+- `check_setup.py` - Verification script for Python environment and LLM connectivity.
+- `chatbot.py` - Basic chatbot implementation.
+- `workflow.py` - Rule-based workflow engine for predefined queries.
+- `tools.py` - Custom tool definitions (`get_course_fee`, `calculator`) for the AI Agent.
+- `agent.py` - Autonomous AI Agent with tool-calling capabilities.
+- `challenge.py` - Evaluation benchmark comparing system responses on complex queries.
+- `requirements.txt` - Project dependencies.
+
+---
+
+## Environment & Tech Stack
+- **Language:** Python 3.9.13
+- **Provider:** Groq
+- **LLM Model:** `openai/gpt-oss-20b`
+- **Development Tools:** VS Code, Git
+
+---
+
+## Benchmark Results & System Comparison
+
+### Output 1: Setup Verification
+```text
+Python version   : 3.9.13
+Provider               : groq
+Model                     : openai/gpt-oss-20b
+Calling the model . . .
+Model replied     : SETUP OK
+Setup check finished.
+```
+
+### Output 2: Rule-Based Workflow
+```text
+=== SYSTEM 2: RULE-BASED WORKFLOW (no LLM) ===
+
+Q: What is the fee for AI202?
+A: Fee for AI202: Rs. 18,000
+
+Q: What is the total fee for CS101 and AI202 after a 10% scholarship?
+A: Total fee: Rs. 27,000
+
+Q: Is DS303 more expensive than CS101, and by how much?
+A: Sorry, I do not have a rule for this type of question.
+
+Q: Write a two-line welcome message for new AI students.
+A: Sorry, I can only answer questions about course fees.
+```
+
+### Output 3: Tool Testing
+```text
+get_course_fee('ai202') -> 18000
+calculator('(12000 + 18000) * 0.9') -> 27000.0
+calculator('15000 - 12000') -> 3000
+```
+
+### Output 4: AI Agent Execution
+```text
+=== SYSTEM 3: AI AGENT | provider: groq | model: openai/gpt-oss-20b ===
+
+Q: What is the fee for AI202?
+step 1: get_course_fee({'course_code': 'AI202'}) -> 18000
+A: The fee for AI202 is Rs. 18,000.
+```
+
+### Output 5: Challenge Evaluation (Budget Query)
+**Query:** *"I can pay Rs. 30,000. Which two courses can I take together within this budget?"*
+
+- **Rule-Based Workflow Output:** `Sorry, I can only answer questions about course fees.`
+- **AI Agent Output:**
+  ```text
+  You can take either of the following pairs of courses within your Rs. 30,000 budget:
+  - CS101 + AI202 = Rs. 30,000
+  - CS101 + DS303 = Rs. 27,000
+
+  Both combinations stay within your budget.
+  ```
+
+---
+
+## Comparative Analysis
+
+| Architecture | Key Strengths | Core Limitations |
+| :--- | :--- | :--- |
+| **Chatbot** | Natural language comprehension & generation | No access to private data; prone to hallucination |
+| **Rule-Based Workflow** | Fast, predictable, 100% deterministic | Rigid; cannot generalize to unscripted questions |
+| **AI Agent** | Dynamic reasoning, tool usage, multi-step problem solving | Depends on LLM tool-calling capabilities & error handling |
+
+---
+
+## Key Takeaways
+1. **Chatbots** excel at open-ended creative tasks but fail when accurate private data is needed without context.
+2. **Rule-Based Systems** guarantee reliability for strict business logic but scale poorly with dynamic user requirements.
+3. **AI Agents** represent the optimal balance by leveraging LLMs for intent understanding and dynamic tool calling for precise operations.
